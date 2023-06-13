@@ -67,14 +67,11 @@ if __name__ == '__main__':
 import asyncio
 from aiogram import Bot, Dispatcher, types
 
-# Замените "YOUR_BOT_TOKEN" на токен вашего бота
 TOKEN = "6160888297:AAH5KdnfEt0aPINbu8KwzwaQKhqJB3qjoAI"
 
-# Создание экземпляров Bot и Dispatcher
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
 
-# Словарь для хранения списка покупок
 shopping_list = []
 
 # Обработчик команды /start
@@ -117,6 +114,14 @@ async def handle_remove_item(message: types.Message):
         await message.reply(f"Элемент '{item_to_remove}' успешно удален из списка покупок.")
     else:
         await message.reply("Выбранный элемент не найден в списке покупок.")
+
+@dp.message_handler(commands=['list'])
+async def show_list(message: types.Message):
+    if not shopping_list:
+        await message.reply("Список покупок пуст.")
+    else:
+        list_text = "\n".join(shopping_list)
+        await message.reply(f"Список покупок:\n{list_text}")
 
 # Запуск бота
 if __name__ == '__main__':
