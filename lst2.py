@@ -2,7 +2,7 @@ import asyncio
 from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 
-TOKEN = "6160888297:AAH5KdnfEt0aPINbu8KwzwaQKhqJB3qjoAI"
+TOKEN = ""
 
 # Создание экземпляров Bot, Dispatcher и MemoryStorage
 bot = Bot(token=TOKEN)

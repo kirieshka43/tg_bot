@@ -11,7 +11,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 
-TOKEN = "6160888297:AAH5KdnfEt0aPINbu8KwzwaQKhqJB3qjoAI"
+TOKEN = ""
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage = MemoryStorage())
 

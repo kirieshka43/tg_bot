@@ -1,9 +1,9 @@
 import telegram
-from telegram import Updater, CommandHandler, MessageHandler, Filters
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import datetime
 
 # Замените "YOUR_BOT_TOKEN" на токен вашего бота
-TOKEN = "6160888297:AAH5KdnfEt0aPINbu8KwzwaQKhqJB3qjoAI"
+TOKEN = ""
 
 # Обработчик команды /start
 def start(update, context):

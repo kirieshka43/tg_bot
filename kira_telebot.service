@@ -1,0 +1,16 @@
+[Unit]
+Description=Telegram Bot
+After=network.target
+
+[Service]
+User=kira
+Group=kira
+
+WorkingDirectory=/home/kira/tg_bot/
+Environment="PYTHONPATH=/home/kira/tg_bot/"
+ExecStart=/home/kira/tg_bot/.venv/bin/python /home/kira/tg_bot/shopping_list.py
+
+[Install]
+WantedBy=multi-user.target
+
+sudo cp /home/kira/tg_bot/kira_telebot.service /etc/systemd/system/kira_telebot.service
