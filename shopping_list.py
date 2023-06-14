@@ -74,10 +74,13 @@ TOKEN = "6160888297:AAH5KdnfEt0aPINbu8KwzwaQKhqJB3qjoAI"
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
+shopping_carts: dict[int, list] = dict()
+
+
 # Обработчик команды /start
 @dp.message_handler(commands=['start'], state="*")
 async def start(message: types.Message, state: FSMContext):
-    await state.update_data(shopping_cart=list())
+    shopping_carts[message.from_id] = list()
     await message.reply("Привет! Я бот для создания списка покупок. Напиши /add, чтобы добавить элемент в список.")
 
 # Обработчик команды /add
@@ -90,10 +93,10 @@ async def add_item(message: types.Message, state: FSMContext):
 @dp.message_handler(state="wait_item_to_add")  
 async def handle_new_item(message: types.Message, state: FSMContext):
     new_item = message.text
-    data = await state.get_data()
-    shopping_cart = data["shopping_cart"]
+    shopping_cart = shopping_carts[message.from_id]
     shopping_cart.append(new_item)
     await message.reply(f"Элемент '{new_item}' успешно добавлен в список покупок!")
+    await state.reset_state(with_data=False)
 
 # Обработчик команды /remove
 # @dp.message_handler(commands=['remove'])
@@ -121,7 +124,7 @@ async def handle_new_item(message: types.Message, state: FSMContext):
 @dp.message_handler(commands=['list'], state="*")
 async def show_list(message: types.Message, state: FSMContext):
     data = await state.get_data()
-    shopping_cart = data["shopping_cart"]
+    shopping_cart = shopping_carts[message.from_id]
 
     if not shopping_cart:
         await message.reply("Список покупок пуст.")
