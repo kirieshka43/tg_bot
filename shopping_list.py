@@ -25,6 +25,7 @@ async def start(message: types.Message, state: FSMContext):
 @dp.message_handler(Text(equals=new_cart_bt.text), state="*")
 @dp.message_handler(commands=['new'], state="*")
 async def new(message: types.Message, state: FSMContext):
+    """Метод, который обрабатывает сообщение пользоваателя, создаёт новый список и присваивает корзине id"""
     cart_id = len(shopping_carts)
     cart = list()
     shopping_carts.append(cart)
@@ -38,6 +39,7 @@ async def new(message: types.Message, state: FSMContext):
 @dp.message_handler(Text(equals=connect_cart_bt.text), state="*")
 @dp.message_handler(commands=['connect'], state="*")
 async def connect(message: types.Message, state: FSMContext):
+    """Метод, который по id присоединяет нового пользователя к старой корзине"""
     await state.set_state("wait_cart_id")
     await message.reply("Введите id корзины:")
 
@@ -56,6 +58,7 @@ async def enter_cart_id(message: types.Message, state: FSMContext):
 @dp.message_handler(Text(equals=add_item_bt.text), state="*")
 @dp.message_handler(commands=['add'], state="*")
 async def add_item(message: types.Message, state: FSMContext):
+    """Метод, который добавляет в корзину пользователя новый элемент"""
     await message.reply("Введите элемент для добавления в список покупок:")
     await state.set_state("wait_item_to_add")
 
@@ -63,6 +66,7 @@ async def add_item(message: types.Message, state: FSMContext):
 @dp.message_handler(Text(equals = remove_item_bt.text), state="*")
 @dp.message_handler(commands=['remove'], state = "*")
 async def remove_item(message: types.Message, state: FSMContext):
+    """Метод, который удаляет из корзины пользователя введённый элемент"""
     cart_id = user_mapping[message.from_id]
     cart = shopping_carts[cart_id]
     if not cart:
@@ -99,13 +103,14 @@ async def handle_remove_item(message: types.Message, state: FSMContext):
 @dp.message_handler(Text(equals = show_item_bt.text), state="*")
 @dp.message_handler(commands=['list'], state="*")
 async def show_list(message: types.Message, state: FSMContext):
+    """Метод, который выводит корзину пользователя"""
     data = await state.get_data()
     cart_id = user_mapping[message.from_id]
     cart = shopping_carts[cart_id]
 
 # проверка пустоты списка
     if not cart:
-        await message.reply("Список покупок ещё пуст. [± _ ±]")
+        await message.reply("Список покупок ещё пуст.")
     else:
         list_text = "\n".join(cart)
         await message.reply(f"Вот список покупок <3:\n{list_text}")
