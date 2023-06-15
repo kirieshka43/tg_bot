@@ -2,8 +2,8 @@ from aiogram.types import KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemo
 from aiogram import types
 
 
-new_cart_bt = KeyboardButton("Cоздать новую корзину")
-connect_cart_bt = KeyboardButton("Найти корзину")
+new_cart_bt = KeyboardButton("Cоздать новый список")
+connect_cart_bt = KeyboardButton("Найти список")
 
 cart_kb = ReplyKeyboardMarkup(one_time_keyboard=False).add(new_cart_bt, connect_cart_bt)
 

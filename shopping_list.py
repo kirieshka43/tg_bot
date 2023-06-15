@@ -32,7 +32,7 @@ async def new(message: types.Message, state: FSMContext):
     user_mapping[message.from_id] = cart_id
     await message.reply(f"Вот id твоей корзины: {user_mapping[message.from_id]}."
                         " Запомни его и никому не говори!!"
-                        " Если ты захочешь присоеденить свою семью, им понадобиться твой id.",
+                        " Если ты захочешь присоединить свою семью, им будет нужен твой id.",
                         reply_markup=item_kb)
 
 # Обработчик команды /connect
@@ -47,10 +47,10 @@ async def connect(message: types.Message, state: FSMContext):
 async def enter_cart_id(message: types.Message, state: FSMContext):
     cart_id = int(message.text)
     if cart_id >= len(shopping_carts) or cart_id < 0:
-        await message.reply("Ой-ой (⌣̀_⌣́), такой корзины не сущестует...")
+        await message.reply("Ой-ой (⌣̀_⌣́), такой корзины не существует...")
     else:
         user_mapping[message.from_id] = cart_id
-        await message.reply("Поздравляю, вы законектились с корзиной! \(★ω★)/", reply_markup=item_kb)
+        await message.reply("Поздравляю, вы связаны с корзиной! \(★ω★)/", reply_markup=item_kb)
     
     await state.reset_state()
 
@@ -70,7 +70,7 @@ async def remove_item(message: types.Message, state: FSMContext):
     cart_id = user_mapping[message.from_id]
     cart = shopping_carts[cart_id]
     if not cart:
-        await message.reply("Список покупок ещё пуст((")
+        await message.reply("Список покупок всё ещё пуст((")
     else:
         await message.reply("Введите элемент для удаления:")
         await state.set_state("wait_item_to_remove")
